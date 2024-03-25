@@ -1,27 +1,49 @@
 <main class="principal">
   <h2 class="principal__titulo">Dados do cadastro</h2>
 
-  <form class="principal__formulario" id="formulario" #f="ngForm" (ngSubmit)="cadastrar(f)">
+  <form class="principal__formulario" id="formulario" #form="ngForm" (ngSubmit)="cadastrar(form)">
     <h3 class="principal__subtitulo">Dados pessoais</h3>
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="nome">Nome Completo</label>
-      <input name="nome" id="nome" class="campo__escrita">
+      <input name="nome" id="nome" class="campo__escrita" ngModel #nome="ngModel" required minlength="2" />
+      <div *ngIf="(nome?.invalid && nome?.touched) || nome?.dirty">
+        <small class="erro__texto" *ngIf="nome?.errors?.['required']">Preecha seu nome completo</small>
+        <small class="erro__texto" *ngIf="nome?.errors?.['minlength']">Nome deve ter mais de 2
+          caracteres.</small>
+      </div>
+
     </div>
     <div class="formulario__dupla">
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="nascimento">Nascimento</label>
-        <input name="nascimento" id="nascimento" type="date" class="campo__escrita"/>
+        <input name="nascimento" id="nascimento" type="date" class="campo__escrita" ngModel #nascimento="ngModel" required />
       </div>
       <div class="formulario__campo">
         <label class="campo__etiqueta" for="telefone">Contato</label>
-        <input name="telefone" id="telefone" type="tel" placeholder="(XX) XXXXX-XXXX" class="campo__escrita"/>
+        
+        <input name="telefone" id="telefone" type="tel" placeholder="(XX) XXXXX-XXXX" class="campo__escrita" ngModel #telefone="ngModel" required pattern="(\(?\d{2}\)?\s?)(\d{4-5}\-?\d{4})"/>
+
+        <div *ngIf="telefone?.invalid && telefone?.touched">
+
+          <small class="erro__texto" *ngIf="telefone?.errors?.['required']">
+            O campo telefone deve ser preenchido.*
+          </small>
+          <small class="erro__texto" *ngIf="telefone?.errors?.['pattern']">
+            Campo telefone deve ter DDD com 2 digitos e numéro de telefone com 9 digitos.
+          </small>
+        </div>
+
       </div>
     </div>
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="email">E-mail</label>
-      <input name="email" id="email" type="email" class="campo__escrita"/>
+      <input name="email" id="email" type="email" class="campo__escrita" ngModel #email="ngModel" required email pattern="^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$"/>
+      <div *ngIf="email?.invalid && email?.touched">
+        <small class="erro__texto" *ngIf="email?.errors?.['required']">O campo de email precisa ser preenchido.*</small>
+        <small class="erro__texto" *ngIf="email?.errors?.['pattern']">O email informado está faltando algo PATTERN.*</small>
+        <small class="erro__texto" *ngIf="email?.errors?.['email']">O email informado está faltando algo ERRO.*</small>
+      </div>
     </div>
-
 
     <h3 class="principal__subtitulo">Endereço</h3>
 
@@ -90,6 +112,8 @@
       </div>
 
     </div>
+
+
     <button type="submit" class="formulario__botao">Enviar formulário</button>
-    </form>
+  </form>
 </main>
