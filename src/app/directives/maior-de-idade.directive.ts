@@ -7,25 +7,19 @@ import {
 } from "@angular/forms";
 
 @Directive({
-  selector: '[appMaiorDeIdade]',
+  selector: '[maiorIdadeValidator]',
   providers: [
     { provide: NG_VALIDATORS, useExisting: MaiorDeIdadeDirective, multi: true },
   ],  
 })
 export class MaiorDeIdadeDirective implements Validator {
-  validate(control: AbstractControl): ValidationErrors|null {
-
-    const dataNasc = control.value;
-    const dataNascPartVerficada = dataNasc || ''
-    
-    const dataNascPart = dataNascPartVerficada.split("-").map(Number);
-    let dataNascMais18anos = new Date(
-      dataNascPart[0] + 18,
-      dataNascPart[1] - 1,
-      dataNascPart[2]
-    );
-    const dataAtual = new Date();
-    const maiorIdade = dataNascMais18anos <= dataAtual;
-    return maiorIdade ? null : {'menorIdade' : true}; 
+  constructor() {}
+  validate(control: AbstractControl): ValidationErrors | null {
+      const dataNascimento = control.value;
+      const anoNascimento = new Date(dataNascimento).getFullYear();
+      const anoNascMais18 = anoNascimento + 18;
+      const anoAtual = new Date().getFullYear();
+      const ehMaior = anoNascMais18 <= anoAtual;
+      return ehMaior ? null : {'maiorIdadeValidator': true};
   }
 }

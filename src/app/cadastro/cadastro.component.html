@@ -5,6 +5,7 @@
 
   <form class="principal__formulario" id="formulario" (ngSubmit)="cadastrar(form)" #form="ngForm">
     <h3 class="principal__subtitulo">Dados pessoais</h3>
+   
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="nome">Nome Completo</label>
       <input name="nome" id="nome" class="campo__escrita" ngModel #nome="ngModel" required minlength="2">
@@ -44,15 +45,29 @@
     
     <div class="formulario__campo">
       <label class="campo__etiqueta" for="nascimento">Nascimento</label>
-      <input name="nascimento" id="nascimento" type="date" class="campo__escrita" ngModel #nascimento="ngModel" required
-        maiorDeIdade />
-      <div *ngIf="nascimento.invalid && nascimento.touched">
-        <small class="erro__texto" *ngIf="nascimento.errors?.['required']">
-          Campo nascimento obrigatório.
-        </small>
-        <small class="erro__texto" *ngIf="nascimento.errors?.['menorIdade']">
-          Usuário deve ser maior de 18 anos.
-        </small>
+      <input
+        name="nascimento"
+        id="nascimento"
+        type="date"
+        class="campo__escrita"
+        ngModel
+        required
+        maiorIdadeValidator
+        #nascimento="ngModel"
+      />
+      <div
+        *ngIf="
+          (nascimento?.invalid && nascimento?.touched) || nascimento?.dirty
+        "
+      >
+        <app-mensagem
+          *ngIf="nascimento?.errors?.['required']"
+          mensagem="A data de nascimento precisa ser preenchida."
+        ></app-mensagem>
+        <app-mensagem
+          *ngIf="nascimento?.errors?.['maiorIdadeValidator']"
+          mensagem=" O usuário deve ter mais de 18 anos."
+        ></app-mensagem>
       </div>
     </div>
 
