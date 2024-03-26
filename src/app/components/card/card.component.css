@@ -1,0 +1,57 @@
+.acoes {
+    display: flex;
+    justify-content: flex-end
+  }
+  
+  .botao-fechar {
+    border: none;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-top: 15px;
+  }
+  
+  .card-interface {
+    background-color: #F8F9FE;
+    padding: 1rem;
+    box-sizing: border-box;
+  }
+  
+  .card-interface .conteudo {
+    margin: 1rem auto;
+    word-wrap: break-word;
+  }
+  
+  .card-interface .autoria {
+    word-wrap: break-word;
+  }
+  
+  .modelo1 {
+    box-shadow: 8px 8px 0px #154580;
+  }
+  
+  .modelo2 {
+    box-shadow: 8px 8px 0px #6BD1FF;
+  }
+  
+  .modelo3 {
+    box-shadow: 8px 8px 0px #84EEC1;
+  }
+  
+  .card-interface-g {
+    width: 556px;
+  }
+  
+  .card-interface-p {
+    width: 262px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .card-interface-g {
+      width: 100%;
+    }
+  }
+  @media screen and (max-width: 426px) {
+    .card-interface-p {
+      width: 100%;
+    }
+  }

@@ -1,5 +1,6 @@
 import { Router } from "@angular/router";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Output } from "@angular/core";
+import { CardInterface } from "../components/card/card.interface";
 //import { HttpClient } from "@angular/common/http";
 // import { map } from "rxjs/operators";
 
@@ -10,6 +11,15 @@ import { Component, OnInit } from "@angular/core";
 })
 export class CadastroComponent implements OnInit {
   
+
+  cardInterface: CardInterface = {
+    id: 0,
+    conteudo: 'Componente Card vindo do componente Cadastro',
+    autoria: 'Sérgio Bruno',
+    modelo: 'modelo2'
+  }
+
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {}

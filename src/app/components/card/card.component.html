@@ -1,0 +1,10 @@
+<div class="card-interface {{ cardInterface.modelo }} ff-roboto-mono" [ngClass]="larguraPensamento()">
+    <img src="/assets/img/{{ cardInterface.modelo }}.png" alt="Aspas coloridas">
+    <p class="conteudo">{{ cardInterface.conteudo }}</p>
+    <p class="autoria"><b>{{ cardInterface.autoria }}</b></p>
+    <div class="acoes">
+      <button class="botao-fechar" >
+        <img src="/assets/img/icone-excluir.png" alt="Ícone de excluir">
+      </button>
+    </div>
+  </div>
