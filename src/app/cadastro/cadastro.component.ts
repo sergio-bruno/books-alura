@@ -1,8 +1,8 @@
 import { Router } from "@angular/router";
 import { Component, OnInit, Output } from "@angular/core";
 import { CardInterface } from "../components/card/card.interface";
-//import { HttpClient } from "@angular/common/http";
-// import { map } from "rxjs/operators";
+import { ConsultaCepService } from "../service/consulta-cep.service";
+import { NgForm } from "@angular/forms";
 
 @Component({
   selector: "app-cadastro",
@@ -10,7 +10,6 @@ import { CardInterface } from "../components/card/card.interface";
   styleUrls: ["./cadastro.component.css"],
 })
 export class CadastroComponent implements OnInit {
-  
 
   cardInterface: CardInterface = {
     id: 0,
@@ -19,29 +18,40 @@ export class CadastroComponent implements OnInit {
     modelo: 'modelo2'
   }
 
-
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private consultacepService: ConsultaCepService
+  ) {}
 
   ngOnInit(): void {}
 
-  cadastrar(form: any) {
-    return form.valid ? this.router.navigate(['sucesso']) : alert('Formulário inválido');
+  consultaCEP(ev: any, f: NgForm) {
+    const cep = ev.target.value;
+    if (cep !== "") {
+      this.consultacepService.getConsultaCep(cep).subscribe((resultado) => {
+        console.log(resultado);
+        this.populandoEndereco(resultado, f);
+      });
+    }
   }
 
-  // consultaCEP(cep: any, form: any) {
-  //   cep = cep.value.replace(/\D/g, "");
-  //   if (cep != "") {
-  //     var validaCEP = /^[0-9]{8}$/;
-  //     if (validaCEP.test(cep)) {
-  //       this.http
-  //         .get(`https://viacep.com.br/ws/${cep}/json/`)
-  //         .subscribe((dados) => this.populaDadosForms(dados, form));
-  //     }
-  //   }
-  // }
-  // populaDadosForms(dados:any, form: any){
-  //   form.setValue({
-  //     nome: null, email: null, endereco: {rua: dados.logradouro,cep:dados.cep , numero: dados,complemento:dados.complemento , bairro: dados.bairro, cidade: dados.cidade, estado:dados.estado }
-  //   })
-  // }
+  populandoEndereco(dados: any, f: NgForm){
+    f.form.patchValue({
+      endereco: dados.logradouro,
+      complemento: dados.complemento,
+      bairro: dados.bairro,
+      cidade: dados.localidade,
+      estado: dados.uf
+    })
+  }
+
+  cadastrar(form: NgForm) {
+    if (form.valid) {
+      this.router.navigate(["./sucesso"]);
+    } else {
+      alert("Formulário inválido");
+    }
+    console.log(form.controls);
+  }
+
 }
