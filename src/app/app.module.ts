@@ -9,9 +9,11 @@ import { CadastroComponent } from './cadastro/cadastro.component';
 import { SucessoCadastroComponent } from './sucesso-cadastro/sucesso-cadastro.component';
 import { FormsModule } from '@angular/forms';
 import { MensagemComponent } from './components/mensagem/mensagem.component';
+import { CardComponent } from './components/card/card.component';
+import { MaiorDeIdadeDirective } from './directives/maior-de-idade.directive';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent, CadastroComponent, SucessoCadastroComponent, MensagemComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, CadastroComponent, SucessoCadastroComponent, MensagemComponent, CardComponent, MaiorDeIdadeDirective],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
